@@ -107,11 +107,13 @@ const Main = () => {
   });
   const [multipleAnswer, setMultipleAnswer] = useState(false);
 
+  const [dragAndDrop, setDragAndDrop] = useState(false);
+
   const question = questions[currentQuestion];
 
-   //Radio QuestionsS
+  //Radio QuestionsS
 
-   const getRadioAnswer = (e) => {
+  const getRadioAnswer = (e) => {
     const radioCheckedAnswer = { id: question.id, answer: e.target.value };
     setRadioChecked(e.target.value);
     setRadioAnswer(radioCheckedAnswer);
@@ -145,14 +147,58 @@ const Main = () => {
       "input[type='checkbox']:checked"
     );
 
-    const multipleAnswerArray = [...multipleCheckedAnswer].map((checked) => checked.value);
+    const multipleAnswerArray = [...multipleCheckedAnswer].map(
+      (checked) => checked.value
+    );
     const multipleAnswerObj = { id: question.id, answer: multipleAnswerArray };
     setMultipleAnswer(multipleAnswerObj);
   };
 
-   //change of question, push all answers to array
+  //DragAndDrop Question
 
-   const changeQuestion = () => {
+  const dragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const dragStart = (e) => {
+    e.dataTransfer.setData("answer_id", e.target.id);
+  };
+
+  const dragDrop = (e) => {
+    e.preventDefault();
+
+    const answer_id = e.dataTransfer.getData("answer_id");
+    const dragAnswer = document.getElementById(answer_id);
+
+    const correctAnswerContainer = document.querySelector(
+      ".draganddrop-questions__user-answer-container"
+    );
+
+    if (correctAnswerContainer.childNodes.length === 0) {
+      correctAnswerContainer.appendChild(dragAnswer);
+    } else {
+      const dropedAnswer = correctAnswerContainer.firstChild;
+      const answerContainer = dragAnswer.parentElement;
+      correctAnswerContainer.replaceChild(dragAnswer, dropedAnswer);
+      answerContainer.appendChild(dropedAnswer);
+    }
+
+    const chosenAnswer = { id: question.id, answer: dragAnswer.dataset.value };
+    setDragAndDrop(chosenAnswer);
+  };
+
+  const resetDragAndDropAnswer = () => {
+    const dragDropBoards = document.querySelector(".draganddrop-questions__answer-container");
+    const dragDropAnswers = document.querySelectorAll(".draganddrop-questions__answer");
+
+    for (const answer of dragDropAnswers) {
+      dragDropBoards.append(answer);
+    }
+  };
+
+  //change of question, push all answers to array
+
+  const changeQuestion = () => {
     if (
       radioChecked ||
       inputValue.trim() !== "" ||
@@ -161,34 +207,37 @@ const Main = () => {
           a: false,
           b: false,
           c: false,
-        })
+        }) ||
+      dragAndDrop
     ) {
       setCurrentQuestion(currentQuestion + 1);
+      resetDragAndDropAnswer();
 
       const radioAnswers = [...userAnswers, radioAnswer];
       const inputAnswers = [...userAnswers, inputAnswer];
       const multipleAnswers = [...userAnswers, multipleAnswer];
+      const dragAndDropAnswers = [...userAnswers, dragAndDrop];
 
       if (question.type === "radio") {
         setUserAnswers(radioAnswers);
       } else if (question.type === "input") {
         setUserAnswers(inputAnswers);
-      }else if (question.type === "multiple") {
-        setUserAnswers (multipleAnswers);
+      } else if (question.type === "multiple") {
+        setUserAnswers(multipleAnswers);
+      } else {
+        setUserAnswers(dragAndDropAnswers);
       }
 
+      setRadioChecked(false);
       setInputValue("");
       setMultipleChecked({
         a: false,
         b: false,
         c: false,
       });
+      setDragAndDrop(false);
     }
   };
-
-   
-
-  
 
   return (
     <>
@@ -203,6 +252,9 @@ const Main = () => {
             getInputValue={getInputValue}
             multipleChecked={multipleChecked}
             getMultipleAnswer={getMultipleAnswer}
+            dragDrop={dragDrop}
+            dragOver={dragOver}
+            dragStart={dragStart}
           />
           <button className="button" onClick={changeQuestion}>
             Dalej
