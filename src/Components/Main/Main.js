@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Questions from "../Questions/index";
+import Progress from "../Progress/Progress";
 
 const questions = [
   {
@@ -89,6 +90,24 @@ const questions = [
   },
 ];
 
+const steps = [
+  {
+    step: 1,
+    completed: false,
+    selected: true,
+  },
+  { step: 2, completed: false, selected: false },
+  { step: 3, completed: false, selected: false },
+  { step: 4, completed: false, selected: false },
+  { step: 5, completed: false, selected: false },
+  { step: 6, completed: false, selected: false },
+  { step: 7, completed: false, selected: false },
+  { step: 8, completed: false, selected: false },
+  { step: 9, completed: false, selected: false },
+  { step: 10, completed: false, selected: false },
+  { step: 11, completed: false, selected: false },
+];
+
 const Main = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
@@ -108,6 +127,9 @@ const Main = () => {
   const [multipleAnswer, setMultipleAnswer] = useState(false);
 
   const [dragAndDrop, setDragAndDrop] = useState(false);
+
+  const [previousStep, setPreviousStep] = useState(steps);
+  const [currentStep, setCurrentStep] = useState(steps);
 
   const question = questions[currentQuestion];
 
@@ -215,6 +237,7 @@ const Main = () => {
       dragAndDrop
     ) {
       setCurrentQuestion(currentQuestion + 1);
+      updateProgress();
       resetDragAndDropAnswer();
 
       const radioAnswers = [...userAnswers, radioAnswer];
@@ -243,6 +266,40 @@ const Main = () => {
     }
   };
 
+  //Progress
+
+  const updateProgress = () => {
+    const stepPrevious = (steps[currentQuestion] = {
+      ...steps[currentQuestion],
+      completed: true,
+      selected: true,
+    });
+
+    setPreviousStep(stepPrevious);
+
+    if (currentQuestion < 10) {
+      const stepCurrent = (steps[currentQuestion + 1] = {
+        ...steps[currentQuestion + 1],
+        completed: false,
+        selected: true,
+      });
+
+      setCurrentStep(stepCurrent);
+    }
+  };
+
+  const resetSteps = () => {
+    steps.forEach(function (step) {
+      if (step.step === 1) {
+        step.completed = false;
+        step.selected = true;
+      } else {
+        step.completed = false;
+        step.selected = false;
+      }
+    });
+  };
+
   //Restart
 
   const setRestart = () => {
@@ -252,6 +309,7 @@ const Main = () => {
     setInputAnswer({});
     setMultipleAnswer(false);
     setDragAndDrop(false);
+    resetSteps();
   };
 
   return (
@@ -261,6 +319,7 @@ const Main = () => {
         {questions && currentQuestion < questions.length ? (
           <>
             <div className="question">
+              <Progress steps={steps} />
               <Questions
                 question={question}
                 getRadioAnswer={getRadioAnswer}
