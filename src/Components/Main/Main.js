@@ -100,6 +100,13 @@ const Main = () => {
   const [inputValue, setInputValue] = useState("");
   const [inputAnswer, setInputAnswer] = useState({});
 
+  const [multipleChecked, setMultipleChecked] = useState({
+    a: false,
+    b: false,
+    c: false,
+  });
+  const [multipleAnswer, setMultipleAnswer] = useState(false);
+
   const question = questions[currentQuestion];
 
    //Radio QuestionsS
@@ -122,24 +129,64 @@ const Main = () => {
     setInputAnswer(inputValueAnswer);
   };
 
+  // Multiple Questions
+
+  const getMultipleAnswer = (e) => {
+    const target = e.target;
+    const value = target.checked;
+    const name = target.name;
+
+    setMultipleChecked({
+      ...multipleChecked,
+      [name]: value,
+    });
+
+    const multipleCheckedAnswer = document.querySelectorAll(
+      "input[type='checkbox']:checked"
+    );
+
+    const multipleAnswerArray = [...multipleCheckedAnswer].map((checked) => checked.value);
+    const multipleAnswerObj = { id: question.id, answer: multipleAnswerArray };
+    setMultipleAnswer(multipleAnswerObj);
+  };
+
    //change of question, push all answers to array
 
    const changeQuestion = () => {
-    if (radioChecked || inputValue.trim() !== "") {
+    if (
+      radioChecked ||
+      inputValue.trim() !== "" ||
+      JSON.stringify(multipleChecked) !==
+        JSON.stringify({
+          a: false,
+          b: false,
+          c: false,
+        })
+    ) {
       setCurrentQuestion(currentQuestion + 1);
 
       const radioAnswers = [...userAnswers, radioAnswer];
       const inputAnswers = [...userAnswers, inputAnswer];
+      const multipleAnswers = [...userAnswers, multipleAnswer];
 
       if (question.type === "radio") {
         setUserAnswers(radioAnswers);
       } else if (question.type === "input") {
         setUserAnswers(inputAnswers);
+      }else if (question.type === "multiple") {
+        setUserAnswers (multipleAnswers);
       }
 
       setInputValue("");
+      setMultipleChecked({
+        a: false,
+        b: false,
+        c: false,
+      });
     }
   };
+
+   
 
   
 
@@ -154,6 +201,8 @@ const Main = () => {
             radioChecked={radioChecked}
             inputValue={inputValue}
             getInputValue={getInputValue}
+            multipleChecked={multipleChecked}
+            getMultipleAnswer={getMultipleAnswer}
           />
           <button className="button" onClick={changeQuestion}>
             Dalej

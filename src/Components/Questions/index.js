@@ -1,6 +1,7 @@
 import React from "react";
 import RadioQuestion from "../Questions/RadioQuestions";
 import InputQuestion from "../Questions/InputQuestions";
+import MultipleQuestion from "../Questions/MultipleQuestions";
 
 const Questions = ({
   question,
@@ -8,6 +9,8 @@ const Questions = ({
   radioChecked,
   inputValue,
   getInputValue,
+  multipleChecked,
+  getMultipleAnswer,
 }) => {
   return (
     <>
@@ -18,13 +21,19 @@ const Questions = ({
             getRadioAnswer={getRadioAnswer}
             radioChecked={radioChecked}
           />
-        ) : (
+        ) : question.type === "input" ? (
           <InputQuestion
             question={question}
             inputValue={inputValue}
             getInputValue={getInputValue}
           />
-        )}
+        ) : question.type === "multiple" ? (
+          <MultipleQuestion
+            question={question}
+            multipleChecked={multipleChecked}
+            getMultipleAnswer={getMultipleAnswer}
+          />
+        ) : null}
       </div>
     </>
   );
