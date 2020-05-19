@@ -188,8 +188,12 @@ const Main = () => {
   };
 
   const resetDragAndDropAnswer = () => {
-    const dragDropBoards = document.querySelector(".draganddrop-questions__answer-container");
-    const dragDropAnswers = document.querySelectorAll(".draganddrop-questions__answer");
+    const dragDropBoards = document.querySelector(
+      ".draganddrop-questions__answer-container"
+    );
+    const dragDropAnswers = document.querySelectorAll(
+      ".draganddrop-questions__answer"
+    );
 
     for (const answer of dragDropAnswers) {
       dragDropBoards.append(answer);
@@ -239,27 +243,48 @@ const Main = () => {
     }
   };
 
+  //Restart
+
+  const setRestart = () => {
+    setCurrentQuestion(0);
+    setUserAnswers([]);
+    setRadioAnswer({});
+    setInputAnswer({});
+    setMultipleAnswer(false);
+    setDragAndDrop(false);
+  };
+
   return (
     <>
-      <div className="quiz-wrapper">
+      <div className="wrapper">
         <div className="header">Quiz Geologiczny</div>
-        <div className="quiz-content">
-          <Questions
-            question={question}
-            getRadioAnswer={getRadioAnswer}
-            radioChecked={radioChecked}
-            inputValue={inputValue}
-            getInputValue={getInputValue}
-            multipleChecked={multipleChecked}
-            getMultipleAnswer={getMultipleAnswer}
-            dragDrop={dragDrop}
-            dragOver={dragOver}
-            dragStart={dragStart}
-          />
-          <button className="button" onClick={changeQuestion}>
-            Dalej
-          </button>
-        </div>
+        {questions && currentQuestion < questions.length ? (
+          <>
+            <div className="question">
+              <Questions
+                question={question}
+                getRadioAnswer={getRadioAnswer}
+                radioChecked={radioChecked}
+                inputValue={inputValue}
+                getInputValue={getInputValue}
+                multipleChecked={multipleChecked}
+                getMultipleAnswer={getMultipleAnswer}
+                dragDrop={dragDrop}
+                dragOver={dragOver}
+                dragStart={dragStart}
+              />
+              <button className="button" onClick={changeQuestion}>
+                Dalej
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <button className="button" onClick={setRestart}>
+              Spróbuj jeszcze raz
+            </button>
+          </>
+        )}
       </div>
     </>
   );
