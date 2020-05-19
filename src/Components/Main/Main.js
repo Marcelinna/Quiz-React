@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Questions from "../Questions/index";
 
 const questions = [
   {
@@ -90,18 +91,48 @@ const questions = [
 
 const Main = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
+
+  const [userAnswers, setUserAnswers] = useState([]);
+
+  const [radioChecked, setRadioChecked] = useState(false);
+  const [radioAnswer, setRadioAnswer] = useState({});
+
   const question = questions[currentQuestion];
 
-  const changeQuestion = () => {
-    setCurrentQuestion(currentQuestion + 1);
+   //Radio QuestionsS
+
+   const getRadioAnswer = (e) => {
+    const radioCheckedAnswer = { id: question.id, answer: e.target.value };
+    setRadioChecked(e.target.value);
+    setRadioAnswer(radioCheckedAnswer);
   };
+
+  const changeQuestion = () => {
+    if (radioChecked) {
+      setCurrentQuestion(currentQuestion + 1);
+
+      const radioAnswers = [...userAnswers, radioAnswer];
+
+      if (question.type === "radio") {
+        setUserAnswers(radioAnswers);
+      }
+    }
+
+    setRadioChecked(false);
+  };
+
+  
 
   return (
     <>
       <div className="quiz-wrapper">
         <div className="header">Quiz Geologiczny</div>
         <div className="quiz-content">
-          <div>{question.question}</div>
+        <Questions
+            question={question}
+            getRadioAnswer={getRadioAnswer}
+            radioChecked={radioChecked}
+          />
           <button className="button" onClick={changeQuestion}>
             Dalej
           </button>
