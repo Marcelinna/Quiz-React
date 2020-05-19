@@ -9,6 +9,7 @@ const MultipleQuestion = ({ question, multipleChecked, getMultipleAnswer }) => {
           className="multiple-question__input"
           type="checkbox"
           name="a"
+          id="a"
           value={question.answer[0].a}
           checked={multipleChecked.a}
           onChange={getMultipleAnswer}
@@ -20,6 +21,7 @@ const MultipleQuestion = ({ question, multipleChecked, getMultipleAnswer }) => {
           className="multiple-question__input"
           type="checkbox"
           name="b"
+          id="b"
           value={question.answer[1].b}
           checked={multipleChecked.b}
           onChange={getMultipleAnswer}
@@ -30,6 +32,7 @@ const MultipleQuestion = ({ question, multipleChecked, getMultipleAnswer }) => {
           className="multiple-question__input"
           type="checkbox"
           name="c"
+          id="c"
           value={question.answer[2].c}
           checked={multipleChecked.c}
           onChange={getMultipleAnswer}

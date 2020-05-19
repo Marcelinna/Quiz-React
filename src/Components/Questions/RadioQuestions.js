@@ -6,7 +6,7 @@ const RadioQuestion = ({ question, getRadioAnswer, radioChecked }) => {
       <div className="question-text">{question.question}</div>
       <div  className="radio-question">
       <input
-        className ="radio-question__input"
+        className ="radio-question__radio"
         type="radio"
         value={question.answer[0].a}
         id="a"
@@ -15,7 +15,7 @@ const RadioQuestion = ({ question, getRadioAnswer, radioChecked }) => {
       />
       <label className="radio-question__label" htmlFor="a">{question.answer[0].a}</label>
       <input
-        className ="radio-question__input"
+        className ="radio-question__radio"
         type="radio"
         value={question.answer[1].b}
         id="b"
