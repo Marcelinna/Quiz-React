@@ -97,6 +97,9 @@ const Main = () => {
   const [radioChecked, setRadioChecked] = useState(false);
   const [radioAnswer, setRadioAnswer] = useState({});
 
+  const [inputValue, setInputValue] = useState("");
+  const [inputAnswer, setInputAnswer] = useState({});
+
   const question = questions[currentQuestion];
 
    //Radio QuestionsS
@@ -107,18 +110,35 @@ const Main = () => {
     setRadioAnswer(radioCheckedAnswer);
   };
 
-  const changeQuestion = () => {
-    if (radioChecked) {
+  //Input Questions
+
+  const getInputValue = (e) => {
+    const currentInputValue = e.target.value
+      .toLowerCase()
+      .replace(/[^a-z]/g, "");
+
+    setInputValue(currentInputValue);
+    const inputValueAnswer = { id: question.id, answer: e.target.value };
+    setInputAnswer(inputValueAnswer);
+  };
+
+   //change of question, push all answers to array
+
+   const changeQuestion = () => {
+    if (radioChecked || inputValue.trim() !== "") {
       setCurrentQuestion(currentQuestion + 1);
 
       const radioAnswers = [...userAnswers, radioAnswer];
+      const inputAnswers = [...userAnswers, inputAnswer];
 
       if (question.type === "radio") {
         setUserAnswers(radioAnswers);
+      } else if (question.type === "input") {
+        setUserAnswers(inputAnswers);
       }
-    }
 
-    setRadioChecked(false);
+      setInputValue("");
+    }
   };
 
   
@@ -128,10 +148,12 @@ const Main = () => {
       <div className="quiz-wrapper">
         <div className="header">Quiz Geologiczny</div>
         <div className="quiz-content">
-        <Questions
+          <Questions
             question={question}
             getRadioAnswer={getRadioAnswer}
             radioChecked={radioChecked}
+            inputValue={inputValue}
+            getInputValue={getInputValue}
           />
           <button className="button" onClick={changeQuestion}>
             Dalej
