@@ -279,7 +279,7 @@ const Main = () => {
       setDragAndDrop(false);
     }
     if (currentQuestion === 10) {
-      stop();
+      stopTimer();
     }
   };
 
@@ -399,7 +399,7 @@ const Main = () => {
     return () => clearInterval(intervalTimer);
   }, [timerStan]);
 
-  const stop = () => {
+  const stopTimer = () => {
     setInterval(clearInterval(intervalTimer));
     
   };
