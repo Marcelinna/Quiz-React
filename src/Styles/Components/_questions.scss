@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding:1rem;
+  padding: 1rem;
   .question-text {
     font-weight: 600;
     border-bottom: 1px solid rgb(167, 167, 167);
@@ -19,13 +19,22 @@
   }
   .radio-question {
     .radio-question__label {
-      padding: 0.7rem;
+      margin-left: 0.2rem;
+      margin-right: 1rem;
     }
   }
   .input-question {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     .input-question__input {
       width: 12rem;
       line-height: 2;
+    }
+    .input-question__error {
+      font-size: 0.8rem;
+      margin-top: 1rem;
+      color: rgb(109, 106, 106);
     }
   }
   .multiple-question {
@@ -54,7 +63,7 @@
       width: 18rem;
       .draganddrop-questions__answer {
         background-color: white;
-        border-radius:0.2rem;
+        border-radius: 0.2rem;
         padding: 0.2rem 0.4rem;
         display: flex;
         align-items: center;

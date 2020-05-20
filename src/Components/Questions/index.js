@@ -10,6 +10,7 @@ const Questions = ({
   radioChecked,
   inputValue,
   getInputValue,
+  formError,
   multipleChecked,
   getMultipleAnswer,
   dragDrop,
@@ -29,6 +30,7 @@ const Questions = ({
           question={question}
           inputValue={inputValue}
           getInputValue={getInputValue}
+          formError={formError}
         />
       ) : question.type === "multiple" ? (
         <MultipleQuestion

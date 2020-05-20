@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Questions from "../Questions/index";
 import Progress from "../Progress/Progress";
+import Result from "../Result/Result";
 
 const questions = [
   {
@@ -77,7 +78,7 @@ const questions = [
   {
     id: 10,
     type: "draganddrop",
-    question: "Występujący w Polsce węgiel kamienny pochodzi z:",
+    question: "Występujący w Polsce węgiel kamienny pochodzi z",
     answer: [{ a: "trzeciorzędu" }, { b: "permu" }, { c: "karbonu" }],
     correct_answer: "karbonu",
   },
@@ -118,6 +119,7 @@ const Main = () => {
 
   const [inputValue, setInputValue] = useState("");
   const [inputAnswer, setInputAnswer] = useState({});
+  const [formError, setFormError] = useState("");
 
   const [multipleChecked, setMultipleChecked] = useState({
     a: false,
@@ -130,6 +132,8 @@ const Main = () => {
 
   const [previousStep, setPreviousStep] = useState(steps);
   const [currentStep, setCurrentStep] = useState(steps);
+
+  const [showCorrectAnswer, SetShowCorrectAnswer] = useState(false);
 
   const question = questions[currentQuestion];
 
@@ -144,13 +148,18 @@ const Main = () => {
   //Input Questions
 
   const getInputValue = (e) => {
-    const currentInputValue = e.target.value
-      .toLowerCase()
-      .replace(/[^a-z]/g, "");
+    const formValid = /^[a-zęóąśłżźćń]*$/;
 
-    setInputValue(currentInputValue);
-    const inputValueAnswer = { id: question.id, answer: e.target.value };
-    setInputAnswer(inputValueAnswer);
+    const currentInputValue = e.target.value.toLowerCase();
+
+    if (!formValid.test(currentInputValue)) {
+      setFormError("odpowiedź nie może zawierać cyfr i znaków specjalnych");
+    } else {
+      setInputValue(currentInputValue);
+      setFormError("");
+      const inputValueAnswer = { id: question.id, answer: e.target.value };
+      setInputAnswer(inputValueAnswer);
+    }
   };
 
   // Multiple Questions
@@ -300,6 +309,73 @@ const Main = () => {
     });
   };
 
+  //Result
+
+  const questionsArrayCopy = JSON.parse(JSON.stringify(questions));
+  const answersArrayCopy = JSON.parse(JSON.stringify(userAnswers));
+
+  questionsArrayCopy.forEach((element) => {
+    if (typeof element.correct_answer === "object") {
+      element.correct_answer = JSON.stringify(element.correct_answer);
+    }
+  });
+
+  answersArrayCopy.forEach((element) => {
+    if (typeof element.answer === "object") {
+      element.answer = JSON.stringify(element.answer);
+    }
+  });
+
+  /////Correct result count
+
+  const getResult = () => {
+    let countResult = [];
+
+    for (let i = 0; i < questionsArrayCopy.length; i++) {
+      if (questionsArrayCopy[i].correct_answer === answersArrayCopy[i].answer) {
+        countResult.push(questionsArrayCopy[i]);
+      }
+    }
+    return countResult.length;
+  };
+
+  ///// Display user correct and wrong answers
+
+  const returnResult = () => {
+    return answersArrayCopy.map((answer) => {
+      const question = questionsArrayCopy.find(
+        (question) => question.id === answer.id
+      );
+
+      if (question.correct_answer === answer.answer) {
+        return (
+          <div className="result-marked-answer">
+            <div className="question-text">{question.question}</div>
+            <div className="result-marked-answer__correct-answer">
+              {question.correct_answer.replace(/[^a-zęóąśłżźćń]/gi, " ")}
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div className="result-marked-answer">
+            <div className="question-text">{question.question}</div>
+            <div className="result-marked-answer__correct-answer">
+              {question.correct_answer.replace(/[^a-zęóąśłżźćń]/gi, " ")}
+            </div>
+            <div className="result-marked-answer__correct-wrong">
+              {answer.answer.replace(/[^a-zęóąśłżźćń]/gi, " ")}
+            </div>
+          </div>
+        );
+      }
+    });
+  };
+
+  const displayCorrectAnswer = () => {
+    SetShowCorrectAnswer(!showCorrectAnswer);
+  };
+
   //Restart
 
   const setRestart = () => {
@@ -325,6 +401,7 @@ const Main = () => {
                 getRadioAnswer={getRadioAnswer}
                 radioChecked={radioChecked}
                 inputValue={inputValue}
+                formError={formError}
                 getInputValue={getInputValue}
                 multipleChecked={multipleChecked}
                 getMultipleAnswer={getMultipleAnswer}
@@ -342,6 +419,11 @@ const Main = () => {
             <button className="button" onClick={setRestart}>
               Spróbuj jeszcze raz
             </button>
+            <Result getResult={getResult} questions={questions} />
+            <button className="button" onClick={displayCorrectAnswer}>
+              Sprawdź odpowiedzi
+            </button>
+            {showCorrectAnswer ? returnResult() : null}
           </>
         )}
       </div>

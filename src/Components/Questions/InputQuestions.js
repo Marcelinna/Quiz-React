@@ -1,6 +1,8 @@
 import React from "react";
 
-const InputQuestion = ({ question, inputValue, getInputValue }) => {
+const InputQuestion = ({ question, inputValue, getInputValue,formError }) => {
+
+  
   return (
     <>
       <div className="question-text">{question.question}</div>
@@ -12,7 +14,9 @@ const InputQuestion = ({ question, inputValue, getInputValue }) => {
           onChange={getInputValue}
           value={inputValue}
         />
+         {formError !==""&&<span className="input-question__error">{formError}</span>}
       </div>
+     
     </>
   );
 };
