@@ -134,7 +134,7 @@ const Main = () => {
   const [previousStep, setPreviousStep] = useState(steps);
   const [currentStep, setCurrentStep] = useState(steps);
 
-  const [showCorrectAnswer, SetShowCorrectAnswer] = useState(false);
+  const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
 
   const [time, setTime] = useState({ h: 0, m: 0, s: 0 });
   const [timerStan, setTimerStan] = useState(0);
@@ -382,7 +382,7 @@ const Main = () => {
   };
 
   const displayCorrectAnswer = () => {
-    SetShowCorrectAnswer(!showCorrectAnswer);
+    setShowCorrectAnswer(!showCorrectAnswer);
   };
 
  
