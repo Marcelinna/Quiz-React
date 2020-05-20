@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Questions from "../Questions/index";
 import Progress from "../Progress/Progress";
 import Result from "../Result/Result";
+import Timer from "../Timer/Timer";
 
 const questions = [
   {
@@ -134,6 +135,10 @@ const Main = () => {
   const [currentStep, setCurrentStep] = useState(steps);
 
   const [showCorrectAnswer, SetShowCorrectAnswer] = useState(false);
+
+  const [time, setTime] = useState({ h: 0, m: 0, s: 0 });
+  const [timerStan, setTimerStan] = useState(0);
+  const [intervalTimer, setIntervalTimer] = useState();
 
   const question = questions[currentQuestion];
 
@@ -273,7 +278,11 @@ const Main = () => {
       });
       setDragAndDrop(false);
     }
+    if (currentQuestion === 10) {
+      stop();
+    }
   };
+
 
   //Progress
 
@@ -376,6 +385,44 @@ const Main = () => {
     SetShowCorrectAnswer(!showCorrectAnswer);
   };
 
+ 
+
+  // Timer
+
+
+  useEffect(() => {
+  
+    setIntervalTimer(setInterval(() => {
+      startTimer();
+    }, 1000));
+
+    return () => clearInterval(intervalTimer);
+  }, [timerStan]);
+
+  const stop = () => {
+    setInterval(clearInterval(intervalTimer));
+    
+  };
+
+  let updatedS = time.s;
+  let updatedM = time.m;
+  let updatedH = time.h;
+
+  const startTimer = () => {
+    if (updatedM === 60) {
+      updatedH++;
+      updatedM = 0;
+    }
+    if (updatedS === 60) {
+      updatedM++;
+      updatedS = 0;
+    }
+
+    updatedS++;
+    setTime({ h: updatedH, m: updatedM, s: updatedS });
+  };
+
+
   //Restart
 
   const setRestart = () => {
@@ -386,6 +433,8 @@ const Main = () => {
     setMultipleAnswer(false);
     setDragAndDrop(false);
     resetSteps();
+    setTime({ h: 0, m: 0, s: 0 });
+    setTimerStan((prevState) => prevState + 1);
   };
 
   return (
@@ -396,6 +445,7 @@ const Main = () => {
           <>
             <div className="question">
               <Progress steps={steps} />
+              <Timer time={time} />
               <Questions
                 question={question}
                 getRadioAnswer={getRadioAnswer}
@@ -420,7 +470,8 @@ const Main = () => {
               Spróbuj jeszcze raz
             </button>
             <Result getResult={getResult} questions={questions} />
-            <button className="button" onClick={displayCorrectAnswer}>
+            <div className="timer__result">Twój czas : <Timer time={time}/></div>
+            <button className="button button__checkanswer" onClick={displayCorrectAnswer}>
               Sprawdź odpowiedzi
             </button>
             {showCorrectAnswer ? returnResult() : null}
