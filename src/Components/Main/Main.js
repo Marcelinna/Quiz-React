@@ -122,6 +122,7 @@ const backgroundImage = [
   "image-9",
   "image-10",
   "image-11",
+  "image-12",
 ];
 
 const Main = () => {
@@ -452,7 +453,14 @@ const Main = () => {
 
   return (
     <>
-      <div className="wrapper" style={background}>
+      <div
+        className={
+          currentQuestion > questions.length
+            ? `wrapper`
+            : `wrapper wrapper--summary`
+        }
+        style={background}
+      >
         {questions && currentQuestion < questions.length ? (
           <>
             <div className="question">
@@ -479,20 +487,23 @@ const Main = () => {
           </>
         ) : (
           <>
-            <button className="button" onClick={setRestart}>
-              Spróbuj jeszcze raz
-            </button>
-            <Result getResult={getResult} questions={questions} />
-            <div className="timer__result">
-              Twój czas : <Timer time={time} />
+            <div class="summary">
+              <Result getResult={getResult} questions={questions} />
+              <div className="timer-result">
+                <span className="timer-result__text"> Twój czas :</span>
+                <Timer time={time} />
+              </div>
+              <button className="button button-restart" onClick={setRestart}>
+                Spróbuj jeszcze raz
+              </button>
+              <button
+                className="button button--checkanswer"
+                onClick={displayCorrectAnswer}
+              >
+                Sprawdź odpowiedzi
+              </button>
+              {showCorrectAnswer ? returnResult() : null}
             </div>
-            <button
-              className="button button__checkanswer"
-              onClick={displayCorrectAnswer}
-            >
-              Sprawdź odpowiedzi
-            </button>
-            {showCorrectAnswer ? returnResult() : null}
           </>
         )}
       </div>

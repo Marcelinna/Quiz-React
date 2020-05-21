@@ -1,17 +1,19 @@
 .result-count{
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
     .result-count__text{
         font-weight: 600;
         padding:1rem;
+       
     }
 }
-
-
 
 .result-marked-answer{
 .question-text{
     font-weight: 600;
     line-height: 2;
-    margin-top: 1rem;
+   
 }
 .result-marked-answer__correct-answer{
 line-height: 1.5;
@@ -21,5 +23,6 @@ letter-spacing: 0.1rem;
 .result-marked-answer__correct-wrong{
 line-height:1.5;
 color:rgb(228, 78, 78);
+margin-bottom: 1rem;
 }
 }
