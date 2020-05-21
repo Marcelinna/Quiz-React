@@ -80,7 +80,7 @@ const questions = [
     id: 10,
     type: "draganddrop",
     question: "Występujący w Polsce węgiel kamienny pochodzi z",
-    answer: [{ a: "trzeciorzędu" }, { b: "permu" }, { c: "karbonu" }],
+    answer: [{ a: "permu" }, { b: "trzeciorzędu" }, { c: "karbonu" }],
     correct_answer: "karbonu",
   },
   {
@@ -108,6 +108,20 @@ const steps = [
   { step: 9, completed: false, selected: false },
   { step: 10, completed: false, selected: false },
   { step: 11, completed: false, selected: false },
+];
+
+const backgroundImage = [
+  "image-1",
+  "image-2",
+  "image-3",
+  "image-4",
+  "image-5",
+  "image-6",
+  "image-7",
+  "image-8",
+  "image-9",
+  "image-10",
+  "image-11",
 ];
 
 const Main = () => {
@@ -141,6 +155,10 @@ const Main = () => {
   const [intervalTimer, setIntervalTimer] = useState();
 
   const question = questions[currentQuestion];
+
+  const background = {
+    backgroundImage: `url("Images/${backgroundImage[currentQuestion]}.jpg")`,
+  };
 
   //Radio QuestionsS
 
@@ -283,7 +301,6 @@ const Main = () => {
     }
   };
 
-
   //Progress
 
   const updateProgress = () => {
@@ -385,23 +402,20 @@ const Main = () => {
     setShowCorrectAnswer(!showCorrectAnswer);
   };
 
- 
-
   // Timer
 
-
   useEffect(() => {
-  
-    setIntervalTimer(setInterval(() => {
-      startTimer();
-    }, 1000));
+    setIntervalTimer(
+      setInterval(() => {
+        startTimer();
+      }, 1000)
+    );
 
     return () => clearInterval(intervalTimer);
   }, [timerStan]);
 
   const stopTimer = () => {
     setInterval(clearInterval(intervalTimer));
-    
   };
 
   let updatedS = time.s;
@@ -422,7 +436,6 @@ const Main = () => {
     setTime({ h: updatedH, m: updatedM, s: updatedS });
   };
 
-
   //Restart
 
   const setRestart = () => {
@@ -439,11 +452,11 @@ const Main = () => {
 
   return (
     <>
-      <div className="wrapper">
-        <div className="header">Quiz Geologiczny</div>
+      <div className="wrapper" style={background}>
         {questions && currentQuestion < questions.length ? (
           <>
             <div className="question">
+              <div className="header">Quiz Geologiczny</div>
               <Progress steps={steps} />
               <Timer time={time} />
               <Questions
@@ -470,8 +483,13 @@ const Main = () => {
               Spróbuj jeszcze raz
             </button>
             <Result getResult={getResult} questions={questions} />
-            <div className="timer__result">Twój czas : <Timer time={time}/></div>
-            <button className="button button__checkanswer" onClick={displayCorrectAnswer}>
+            <div className="timer__result">
+              Twój czas : <Timer time={time} />
+            </div>
+            <button
+              className="button button__checkanswer"
+              onClick={displayCorrectAnswer}
+            >
               Sprawdź odpowiedzi
             </button>
             {showCorrectAnswer ? returnResult() : null}
