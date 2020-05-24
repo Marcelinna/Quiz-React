@@ -1,10 +1,9 @@
 .question {
-  background-color: white;
-  width: 50vw;
+  background-color: rgba(255, 255, 255, 0.966);
+  width: 60%;
   height: auto;
   box-shadow: 0 0 0.2rem rgb(63, 63, 63);
   border-radius: 0.5rem;
-  margin-top: 3em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,13 +11,13 @@
 
   .question-text {
     font-weight: 600;
-    border-bottom: 1px solid rgb(167, 167, 167);
     margin-bottom: 1.4rem;
     max-width: 80%;
     line-height: 2;
     letter-spacing: 0.02rem;
   }
   .radio-question {
+    display: flex;
     .radio-question__label {
       margin-left: 0.2rem;
       margin-right: 1rem;
@@ -39,17 +38,18 @@
     }
   }
   .multiple-question {
+    display: flex;
     .multiple-question__label {
       margin-left: 0.2rem;
       margin-right: 0.8rem;
     }
   }
   .draganddrop-question {
+    max-width: 18rem;
+    width: 100%;
     .draganddrop-questions__user-answer-container {
       border: 1px solid rgb(199, 14, 14);
-      height: 1.5rem;
-      width: 18rem;
-      padding: 0.5rem;
+      height: 1.8rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -61,14 +61,54 @@
       justify-content: center;
       background-color: rgb(250, 129, 108);
       padding: 0.5rem;
-      width: 18rem;
+
       .draganddrop-questions__answer {
-        background-color: white;
         border-radius: 0.05rem;
-        padding: 0.9rem 0.4rem;
         display: flex;
         align-items: center;
-        margin: 0 0.2rem;
+        padding: 0.2rem;
+        margin: 0 0.1rem 0 0.1rem;
+      }
+    }
+    .draganddrop-question__message {
+      font-size: 0.8rem;
+      margin-top: 1rem;
+      color: rgb(109, 106, 106);
+      display: inline-block;
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .question {
+    width: 72%;
+    .radio-question {
+      flex-direction: column;
+      align-items: flex-start;
+      .radio-question__answer {
+        margin-bottom: 1rem;
+      }
+    }
+    .multiple-question {
+      flex-direction: column;
+      align-items: flex-start;
+      .multiple-question__answer {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .question {
+    width: 90%;
+    padding: 0.2rem;
+
+    .draganddrop-question {
+      max-width: 18rem;
+      width: 100%;
+      .draganddrop-questions__answer-container {
+        font-size: 0.95rem;
       }
     }
   }

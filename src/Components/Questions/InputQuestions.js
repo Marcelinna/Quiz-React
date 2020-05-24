@@ -7,6 +7,7 @@ const InputQuestion = ({ question, inputValue, getInputValue,formError }) => {
     <>
       <div className="question-text">{question.question}</div>
       <div className="input-question">
+        <div className="input-question__answer">
         <input
           className="input-question__input"
           type="text"
@@ -14,6 +15,7 @@ const InputQuestion = ({ question, inputValue, getInputValue,formError }) => {
           onChange={getInputValue}
           value={inputValue}
         />
+        </div>
          {formError !==""&&<span className="input-question__error">{formError}</span>}
       </div>
      

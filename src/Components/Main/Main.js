@@ -3,127 +3,9 @@ import Questions from "../Questions/index";
 import Progress from "../Progress/Progress";
 import Result from "../Result/Result";
 import Timer from "../Timer/Timer";
-
-const questions = [
-  {
-    id: 1,
-    type: "radio",
-    question: "Nazwa epoki geologicznej w której żyjemy?",
-    answer: [{ a: "neogen" }, { b: "holocent" }],
-    correct_answer: "holocent",
-  },
-  {
-    id: 2,
-    type: "radio",
-    question: "Co to jest krasowienie?",
-    answer: [
-      { a: "rodzaj wietrzenia chemicznego" },
-      { b: "rodzaj wietrzenia mechanicznego" },
-    ],
-    correct_answer: "Rodzaj wietrzenia chemicznego",
-  },
-  {
-    id: 3,
-    type: "radio",
-    question: "Ruchy górotwórcze to inaczej",
-    answer: [{ a: "orogeneza" }, { b: "sedymentacja" }],
-    correct_answer: "orogeneza",
-  },
-  {
-    id: 4,
-    type: "radio",
-    question: "Jaką cechę minerału określamy na podstawie skali Mohsa?",
-    answer: [{ a: "połysk" }, { b: "twardość" }],
-    correct_answer: "twardość",
-  },
-  {
-    id: 5,
-    type: "input",
-    question: "Krapaty powstały podczas orogenezy .....",
-    answer: [{ a: "alpejskiej" }],
-    correct_answer: "alpejskiej",
-  },
-  {
-    id: 6,
-    type: "input",
-    question:
-      "Skały ..... powstały wskutek krystalizacji lub zakrzepnięcia magmy w głębi skorupy ziemskiej lub lawy na powierzchni Ziemi",
-    answer: [{ a: "magmowe" }],
-    correct_answer: "magmowe",
-  },
-  {
-    id: 7,
-    type: "multiple",
-    question: "Pustyniami piaszczystymi są?",
-    answer: [
-      { a: "Sahara" },
-      { b: "Gibsona" },
-      { c: "Wielka Pustynia Wiktorii" },
-    ],
-    correct_answer: ["Sahara", "Wielka Pustynia Wiktorii"],
-  },
-  {
-    id: 8,
-    type: "multiple",
-    question: "Do planet typu ziemskiego NIE należą?",
-    answer: [{ a: "Mars" }, { b: "Jowisz" }, { c: "Neptun" }],
-    correct_answer: ["Jowisz", "Neptun"],
-  },
-  {
-    id: 9,
-    type: "multiple",
-    question: "Na terenie, których państw rozciaga się pustynia Gobi?",
-    answer: [{ a: "Chiny" }, { b: "Kazachstan" }, { c: "Mongolia" }],
-    correct_answer: ["Chiny", "Mongolia"],
-  },
-  {
-    id: 10,
-    type: "draganddrop",
-    question: "Występujący w Polsce węgiel kamienny pochodzi z",
-    answer: [{ a: "permu" }, { b: "trzeciorzędu" }, { c: "karbonu" }],
-    correct_answer: "karbonu",
-  },
-  {
-    id: 11,
-    type: "draganddrop",
-    question: "Węgiel brunatnu wydobywa się metodą",
-    answer: [{ a: "głębinową" }, { b: "otworową" }, { c: "odkrywkową" }],
-    correct_answer: "odkrywkową",
-  },
-];
-
-const steps = [
-  {
-    step: 1,
-    completed: false,
-    selected: true,
-  },
-  { step: 2, completed: false, selected: false },
-  { step: 3, completed: false, selected: false },
-  { step: 4, completed: false, selected: false },
-  { step: 5, completed: false, selected: false },
-  { step: 6, completed: false, selected: false },
-  { step: 7, completed: false, selected: false },
-  { step: 8, completed: false, selected: false },
-  { step: 9, completed: false, selected: false },
-  { step: 10, completed: false, selected: false },
-  { step: 11, completed: false, selected: false },
-];
-
-const backgroundImage = [
-  "image-1",
-  "image-2",
-  "image-3",
-  "image-4",
-  "image-5",
-  "image-6",
-  "image-7",
-  "image-8",
-  "image-9",
-  "image-10",
-  "image-11",
-  "image-12",
-];
+import { questions } from "../../Data/questions";
+import { steps } from "../../Data/steps";
+import { backgroundImage } from "../../Data/images";
 
 const Main = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -161,7 +43,7 @@ const Main = () => {
     backgroundImage: `url("Images/${backgroundImage[currentQuestion]}.jpg")`,
   };
 
-  //Radio QuestionsS
+  //Radio Questions: get user answer
 
   const getRadioAnswer = (e) => {
     const radioCheckedAnswer = { id: question.id, answer: e.target.value };
@@ -169,7 +51,7 @@ const Main = () => {
     setRadioAnswer(radioCheckedAnswer);
   };
 
-  //Input Questions
+  //Input Questions: get user answer, block number, and special characters
 
   const getInputValue = (e) => {
     const formValid = /^[a-zęóąśłżźćń]*$/;
@@ -186,16 +68,14 @@ const Main = () => {
     }
   };
 
-  // Multiple Questions
+  // Multiple Questions:get user answer
 
   const getMultipleAnswer = (e) => {
-    const target = e.target;
-    const value = target.checked;
-    const name = target.name;
+    const { checked, name } = e.target;
 
     setMultipleChecked({
       ...multipleChecked,
-      [name]: value,
+      [name]: checked,
     });
 
     const multipleCheckedAnswer = document.querySelectorAll(
@@ -209,10 +89,38 @@ const Main = () => {
     setMultipleAnswer(multipleAnswerObj);
   };
 
-  //DragAndDrop Question
+  //DragAndDrop Question:get user answer
+  const correctAnswerContainer = document.querySelector(
+    ".draganddrop-questions__user-answer-container"
+  );
+
+  //allow pick only one answer
+  const handleDropedAnswer = (answer) => {
+    if (correctAnswerContainer.childNodes.length === 0) {
+      correctAnswerContainer.appendChild(answer);
+    } else {
+      const dropedAnswer = correctAnswerContainer.firstChild;
+      const answerContainer = answer.parentElement;
+      correctAnswerContainer.replaceChild(answer, dropedAnswer);
+      answerContainer.appendChild(dropedAnswer);
+    }
+  };
 
   const dragOver = (e) => {
     e.preventDefault();
+  };
+
+  const touchMove = (e) => {
+    e.preventDefault();
+    const touchLocation = e.targetTouches[0];
+    const touchanswer = e.targetTouches[0].target;
+    touchanswer.style.left = touchLocation.pageX + "px";
+    touchanswer.style.top = touchLocation.pageY + "px";
+
+    handleDropedAnswer(touchanswer);
+
+    const chosenAnswer = { id: question.id, answer: touchanswer.dataset.value };
+    setDragAndDrop(chosenAnswer);
   };
 
   const dragStart = (e) => {
@@ -221,27 +129,15 @@ const Main = () => {
 
   const dragDrop = (e) => {
     e.preventDefault();
-
     const answer_id = e.dataTransfer.getData("answer_id");
     const dragAnswer = document.getElementById(answer_id);
 
-    const correctAnswerContainer = document.querySelector(
-      ".draganddrop-questions__user-answer-container"
-    );
-
-    if (correctAnswerContainer.childNodes.length === 0) {
-      correctAnswerContainer.appendChild(dragAnswer);
-    } else {
-      const dropedAnswer = correctAnswerContainer.firstChild;
-      const answerContainer = dragAnswer.parentElement;
-      correctAnswerContainer.replaceChild(dragAnswer, dropedAnswer);
-      answerContainer.appendChild(dropedAnswer);
-    }
+    handleDropedAnswer(dragAnswer);
 
     const chosenAnswer = { id: question.id, answer: dragAnswer.dataset.value };
     setDragAndDrop(chosenAnswer);
   };
-
+  //return answer to right container
   const resetDragAndDropAnswer = () => {
     const dragDropBoards = document.querySelector(
       ".draganddrop-questions__answer-container"
@@ -280,11 +176,14 @@ const Main = () => {
 
       if (question.type === "radio") {
         setUserAnswers(radioAnswers);
-      } else if (question.type === "input") {
+      }
+      if (question.type === "input") {
         setUserAnswers(inputAnswers);
-      } else if (question.type === "multiple") {
+      }
+      if (question.type === "multiple") {
         setUserAnswers(multipleAnswers);
-      } else {
+      }
+      if (question.type === "draganddrop") {
         setUserAnswers(dragAndDropAnswers);
       }
 
@@ -374,18 +273,23 @@ const Main = () => {
         (question) => question.id === answer.id
       );
 
+      //correct_answer - from questions
+      //answer - from user answers
+
       if (question.correct_answer === answer.answer) {
         return (
-          <div className="result-marked-answer">
+          <div key={question.id} className="result-marked-answer">
             <div className="question-text">{question.question}</div>
             <div className="result-marked-answer__correct-answer">
               {question.correct_answer.replace(/[^a-zęóąśłżźćń]/gi, " ")}
             </div>
           </div>
         );
-      } else {
+      }
+
+      if (question.correct_answer !== answer.answer) {
         return (
-          <div className="result-marked-answer">
+          <div key={question.id} className="result-marked-answer">
             <div className="question-text">{question.question}</div>
             <div className="result-marked-answer__correct-answer">
               {question.correct_answer.replace(/[^a-zęóąśłżźćń]/gi, " ")}
@@ -455,7 +359,7 @@ const Main = () => {
     <>
       <div
         className={
-          currentQuestion > questions.length
+          currentQuestion < questions.length
             ? `wrapper`
             : `wrapper wrapper--summary`
         }
@@ -479,6 +383,7 @@ const Main = () => {
                 dragDrop={dragDrop}
                 dragOver={dragOver}
                 dragStart={dragStart}
+                touchMove={touchMove}
               />
               <button className="button" onClick={changeQuestion}>
                 Dalej
@@ -487,15 +392,16 @@ const Main = () => {
           </>
         ) : (
           <>
-            <div class="summary">
+            <div className="summary">
+              <button className="button button-restart" onClick={setRestart}>
+                Spróbuj jeszcze raz
+              </button>
               <Result getResult={getResult} questions={questions} />
               <div className="timer-result">
                 <span className="timer-result__text"> Twój czas :</span>
                 <Timer time={time} />
               </div>
-              <button className="button button-restart" onClick={setRestart}>
-                Spróbuj jeszcze raz
-              </button>
+
               <button
                 className="button button--checkanswer"
                 onClick={displayCorrectAnswer}

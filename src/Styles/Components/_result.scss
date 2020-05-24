@@ -1,28 +1,32 @@
-.result-count{
-    font-size: 1.3rem;
-    display: flex;
-    flex-direction: column;
-    .result-count__text{
-        font-weight: 600;
-        padding:1rem;
-       
-    }
+.result-count {
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  .result-count__text {
+    font-weight: 600;
+    padding: 1rem;
+    margin-top: 3rem;
+  }
 }
 
-.result-marked-answer{
-.question-text{
+.result-marked-answer {
+  .question-text {
     font-weight: 600;
-    line-height: 2;
-   
-}
-.result-marked-answer__correct-answer{
-line-height: 1.5;
-color: rgb(80, 204, 80);
-letter-spacing: 0.1rem;
-}
-.result-marked-answer__correct-wrong{
-line-height:1.5;
-color:rgb(228, 78, 78);
-margin-bottom: 1rem;
-}
+    margin: 0.5rem;
+    
+  }
+  .result-marked-answer__correct-answer {
+    line-height: 1.5;
+    color: rgb(117, 235, 117);
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+  }
+  .result-marked-answer__correct-wrong {
+    line-height: 1.5;
+    color: rgb(221, 103, 103);
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    
+  }
 }

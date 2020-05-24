@@ -16,6 +16,7 @@ const Questions = ({
   dragDrop,
   dragStart,
   dragOver,
+  touchMove
 }) => {
   return (
     <>
@@ -44,6 +45,7 @@ const Questions = ({
           dragDrop={dragDrop}
           dragStart={dragStart}
           dragOver={dragOver}
+          touchMove={touchMove}
         />
       )}
     </>
