@@ -5,7 +5,7 @@ const DragAndDropQuestion = ({
   dragDrop,
   dragOver,
   dragStart,
-  touchMove
+  touchMove,
 }) => {
   return (
     <>
@@ -23,38 +23,19 @@ const DragAndDropQuestion = ({
           onDragOver={dragOver}
           onDrop={dragDrop}
         >
-          <div
-            className="draganddrop-questions__answer"
-            id="a"
-            data-value={question.answer[0].a}
-            draggable="true"
-            onTouchMove={touchMove}
-            onDragStart={dragStart}
-          >
-            {question.answer[0].a}
-          </div>
-
-          <div
-            className="draganddrop-questions__answer"
-            id="b"
-            data-value={question.answer[1].b}
-            draggable="true"
-            onTouchMove={touchMove}
-            onDragStart={dragStart}
-          >
-            {question.answer[1].b}
-          </div>
-
-          <div
-            className="draganddrop-questions__answer"
-            id="c"
-            data-value={question.answer[2].c}
-            draggable="true"
-            onTouchMove={touchMove}
-            onDragStart={dragStart}
-          >
-            {question.answer[2].c}
-          </div>
+          {question.answer.map((answ) => (
+            <div
+              className="draganddrop-questions__answer"
+              key={Object.keys(answ)[0]}
+              id={Object.keys(answ)[0]}
+              data-value={Object.values(answ)[0]}
+              draggable="true"
+              onTouchMove={touchMove}
+              onDragStart={dragStart}
+            >
+              {Object.values(answ)[0]}
+            </div>
+          ))}
         </div>
         <span className="draganddrop-question__message">
           przeciągnij prawidłową odpowiedź
