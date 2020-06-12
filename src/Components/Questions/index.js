@@ -16,37 +16,25 @@ const Questions = ({
   dragDrop,
   dragStart,
   dragOver,
-  touchMove
+  touchMove,
 }) => {
   return (
     <>
       {question.type === "radio" ? (
-        <RadioQuestion
-          question={question}
-          getRadioAnswer={getRadioAnswer}
-          radioChecked={radioChecked}
-        />
+        <RadioQuestion {...{ question, getRadioAnswer, radioChecked }} />
       ) : question.type === "input" ? (
         <InputQuestion
-          question={question}
-          inputValue={inputValue}
-          getInputValue={getInputValue}
-          formError={formError}
+          {...{ question, inputValue, getInputValue, formError }}
         />
       ) : question.type === "multiple" ? (
         <MultipleQuestion
-          question={question}
-          multipleChecked={multipleChecked}
-          getMultipleAnswer={getMultipleAnswer}
+          {...{ question, getMultipleAnswer, multipleChecked }}
         />
       ) : (
         <DragAndDropQuestion
-          question={question}
-          dragDrop={dragDrop}
-          dragStart={dragStart}
-          dragOver={dragOver}
-          touchMove={touchMove}
+          {...{ question, dragDrop, dragStart, dragOver, touchMove }}
         />
+      )}
       )}
     </>
   );

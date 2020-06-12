@@ -6,7 +6,6 @@ import Timer from "../Timer/Timer";
 import { questions } from "../../Data/questions";
 import { steps } from "../../Data/steps";
 import { backgroundImage } from "../../Data/images";
-import Api from "../../Data/api";
 
 const Main = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -366,22 +365,23 @@ const Main = () => {
           <>
             <div className="question">
               <div className="header">Quiz Geologiczny</div>
-              <Api />
               <Progress steps={steps} />
               <Timer time={time} />
               <Questions
-                question={question}
-                getRadioAnswer={getRadioAnswer}
-                radioChecked={radioChecked}
-                inputValue={inputValue}
-                formError={formError}
-                getInputValue={getInputValue}
-                multipleChecked={multipleChecked}
-                getMultipleAnswer={getMultipleAnswer}
-                dragDrop={dragDrop}
-                dragOver={dragOver}
-                dragStart={dragStart}
-                touchMove={touchMove}
+                {...{
+                  question,
+                  getRadioAnswer,
+                  radioChecked,
+                  inputValue,
+                  getInputValue,
+                  formError,
+                  multipleChecked,
+                  getMultipleAnswer,
+                  dragDrop,
+                  dragOver,
+                  dragStart,
+                  touchMove,
+                }}
               />
               <button className="button" onClick={changeQuestion}>
                 Dalej
