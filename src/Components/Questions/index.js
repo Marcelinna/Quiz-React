@@ -35,7 +35,6 @@ const Questions = ({
           {...{ question, dragDrop, dragStart, dragOver, touchMove }}
         />
       )}
-      )}
     </>
   );
 };

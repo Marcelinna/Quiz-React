@@ -37,7 +37,6 @@ const Main = () => {
   const [timerStan, setTimerStan] = useState(0);
   const [intervalTimer, setIntervalTimer] = useState();
 
-
   const question = questions[currentQuestion];
 
   const background = {
@@ -394,6 +393,7 @@ const Main = () => {
                 Spróbuj jeszcze raz
               </button>
               <Result getResult={getResult} questions={questions} />
+
               <div className="timer-result">
                 <span className="timer-result__text"> Twój czas :</span>
                 <Timer time={time} />
