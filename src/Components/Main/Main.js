@@ -37,7 +37,6 @@ const Main = () => {
   const [timerStan, setTimerStan] = useState(0);
   const [intervalTimer, setIntervalTimer] = useState();
 
-  const [google, setGoogle] = useState([]);
 
   const question = questions[currentQuestion];
 
