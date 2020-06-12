@@ -7,11 +7,14 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
-    
+    "react-google-sheets": "^0.4.0",
+    "react-scripts": "3.4.1",
+    "tabletop": "^1.6.3",
+    "use-google-sheets": "^1.0.4"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -37,6 +40,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^2.2.0",
+    "prettier": "2.0.5"
   }
 }

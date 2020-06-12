@@ -23,17 +23,17 @@ const DragAndDropQuestion = ({
           onDragOver={dragOver}
           onDrop={dragDrop}
         >
-          {question.answer.map((answ) => (
+          {question.answer.map((el, index) => (
             <div
               className="draganddrop-questions__answer"
-              key={Object.keys(answ)[0]}
-              id={Object.keys(answ)[0]}
-              data-value={Object.values(answ)[0]}
+              key={index}
+              id={index}
+              data-value={el}
               draggable="true"
               onTouchMove={touchMove}
               onDragStart={dragStart}
             >
-              {Object.values(answ)[0]}
+              {el}
             </div>
           ))}
         </div>

@@ -5,20 +5,18 @@ const MultipleQuestion = ({ question, multipleChecked, getMultipleAnswer }) => {
     <>
       <div className="question-text">{question.question}</div>
       <div className="multiple-question">
-        {question.answer.map((answ) => (
-          <div className="multiple-question__answer" key={Object.keys(answ)[0]}>
-            <input
-              className="multiple-question__input"
-              type="checkbox"
-              id={Object.keys(answ)[0]}
-              name={Object.keys(answ)[0]}
-              value={Object.values(answ)[0]}
-              checked={multipleChecked[Object.keys(answ)[0]]}
-              onChange={getMultipleAnswer}
-            />
-
-            <label className="multiple-question__label" htmlFor={Object.keys(answ)[0]}>
-              {Object.values(answ)[0]}
+        {question.answer.map((el, index) => (
+          <div className="multiple-question__answer" key={index}>
+            <label className="multiple-question__label">
+              <input
+                className="multiple-question__input"
+                type="checkbox"
+                value={el}
+                name={index}
+                checked={multipleChecked[index]}
+                onChange={getMultipleAnswer}
+              />
+              {el}
             </label>
           </div>
         ))}

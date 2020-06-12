@@ -6,6 +6,7 @@ import Timer from "../Timer/Timer";
 import { questions } from "../../Data/questions";
 import { steps } from "../../Data/steps";
 import { backgroundImage } from "../../Data/images";
+import Api from "../../Data/api";
 
 const Main = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -20,9 +21,9 @@ const Main = () => {
   const [formError, setFormError] = useState("");
 
   const [multipleChecked, setMultipleChecked] = useState({
-    a: false,
-    b: false,
-    c: false,
+    0: false,
+    1: false,
+    2: false,
   });
   const [multipleAnswer, setMultipleAnswer] = useState(false);
 
@@ -36,6 +37,8 @@ const Main = () => {
   const [time, setTime] = useState({ h: 0, m: 0, s: 0 });
   const [timerStan, setTimerStan] = useState(0);
   const [intervalTimer, setIntervalTimer] = useState();
+
+  const [google, setGoogle] = useState([]);
 
   const question = questions[currentQuestion];
 
@@ -90,12 +93,13 @@ const Main = () => {
   };
 
   //DragAndDrop Question:get user answer
-  const correctAnswerContainer = document.querySelector(
-    ".draganddrop-questions__user-answer-container"
-  );
 
   //allow pick only one answer
   const handleDropedAnswer = (answer) => {
+    const correctAnswerContainer = document.querySelector(
+      ".draganddrop-questions__user-answer-container"
+    );
+
     if (correctAnswerContainer.childNodes.length === 0) {
       correctAnswerContainer.appendChild(answer);
     } else {
@@ -159,9 +163,9 @@ const Main = () => {
       inputValue.trim() !== "" ||
       JSON.stringify(multipleChecked) !==
         JSON.stringify({
-          a: false,
-          b: false,
-          c: false,
+          0: false,
+          1: false,
+          2: false,
         }) ||
       dragAndDrop
     ) {
@@ -190,9 +194,9 @@ const Main = () => {
       setRadioChecked(false);
       setInputValue("");
       setMultipleChecked({
-        a: false,
-        b: false,
-        c: false,
+        0: false,
+        1: false,
+        2: false,
       });
       setDragAndDrop(false);
     }
@@ -307,7 +311,7 @@ const Main = () => {
     setShowCorrectAnswer(!showCorrectAnswer);
   };
 
-  // Timer
+  //Timer
 
   useEffect(() => {
     setIntervalTimer(
@@ -357,18 +361,12 @@ const Main = () => {
 
   return (
     <>
-      <div
-        className={
-          currentQuestion < questions.length
-            ? `wrapper`
-            : `wrapper wrapper--summary`
-        }
-        style={background}
-      >
+      <div className="wrapper" style={background}>
         {questions && currentQuestion < questions.length ? (
           <>
             <div className="question">
               <div className="header">Quiz Geologiczny</div>
+              <Api />
               <Progress steps={steps} />
               <Timer time={time} />
               <Questions

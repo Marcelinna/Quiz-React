@@ -10,5 +10,4 @@ export const backgroundImage = [
     "img-9",
     "img-10",
     "img-11",
-    "img-12",
   ];

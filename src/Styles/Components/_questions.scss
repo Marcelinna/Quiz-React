@@ -18,9 +18,9 @@
   }
   .radio-question {
     display: flex;
-    .radio-question__label {
-      margin-left: 0.2rem;
-      margin-right: 1rem;
+    .radio-question__input {
+      margin-left: 1rem;
+      margin-right: 0.2rem;
     }
   }
   .input-question {
@@ -39,9 +39,9 @@
   }
   .multiple-question {
     display: flex;
-    .multiple-question__label {
-      margin-left: 0.2rem;
-      margin-right: 0.8rem;
+    .multiple-question__input {
+      margin-left: 0.8rem;
+      margin-right: 0.2rem;
     }
   }
   .draganddrop-question {

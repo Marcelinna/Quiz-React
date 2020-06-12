@@ -5,22 +5,18 @@ const RadioQuestion = ({ question, getRadioAnswer, radioChecked }) => {
     <>
       <div className="question-text">{question.question}</div>
       <div className="radio-question">
-        {question.answer.map((answ) => (
-          <div className="radio-question__answer" key={Object.keys(answ)[0]}>
-            <input
-              className="radio-question__input"
-              type="radio"
-              id={Object.keys(answ)[0]}
-              value={Object.values(answ)[0]}
-              name={Object.keys(answ)[0]}
-              checked={radioChecked === Object.values(answ)[0]}
-              onChange={getRadioAnswer}
-            />
-            <label
-              className="radio-question__label"
-              htmlFor={Object.keys(answ)[0]}
-            >
-              {Object.values(answ)[0]}
+        {question.answer.map((el, index) => (
+          <div className="radio-question__answer" key={index}>
+            <label className="radio-question__label">
+              <input
+                className="radio-question__input"
+                type="radio"
+                value={el}
+                name={index}
+                checked={radioChecked === el}
+                onChange={getRadioAnswer}
+              />
+                {el}
             </label>
           </div>
         ))}
