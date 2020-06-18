@@ -11,10 +11,10 @@ const Main = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   const [userAnswers, setUserAnswers] = useState([]);
-
+  
   const [radioChecked, setRadioChecked] = useState(false);
   const [radioAnswer, setRadioAnswer] = useState({});
-
+  const [answer, setAnswer] = useState({});
   const [inputValue, setInputValue] = useState("");
   const [inputAnswer, setInputAnswer] = useState({});
   const [formError, setFormError] = useState("");
@@ -25,7 +25,6 @@ const Main = () => {
     2: false,
   });
   const [multipleAnswer, setMultipleAnswer] = useState(false);
-
   const [dragAndDrop, setDragAndDrop] = useState(false);
 
   const [previousStep, setPreviousStep] = useState(steps);

@@ -57,6 +57,10 @@ body {
   margin-bottom: 2rem;
   font-size: 0.9rem;
   font-weight: 500;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
 }
 .button--checkanswer {
   margin-top: 1rem;
@@ -68,11 +72,6 @@ body {
   top: 0;
   left: 0.7rem;
   margin-right: 0.7rem;
-}
-
-.button:hover {
-  cursor: pointer;
-  opacity: 0.9;
 }
 
 @media (max-width: 1000px) {
