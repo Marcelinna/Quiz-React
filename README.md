@@ -1,3 +1,10 @@
+ Quiz made using the React library. Contains various types of questions: drag and drop, input, radio, checkbox. The user sees the progress and the elapsed time while completing the quiz.
+ 
+ https://marcelinna.github.io/Quiz-React/
+ 
+ 
+ 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
