@@ -76,7 +76,7 @@ export const questions = [
   {
     id: 11,
     type: "draganddrop",
-    question: "Węgiel brunatny wydobywa się metodą",
+    question: "Węgiel brunatny wydobywa się metodą?",
     answer: ["głębinową", "otworową", "odkrywkową"],
     correct_answer: "odkrywkową",
   },
